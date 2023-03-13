@@ -32,11 +32,17 @@ export class PantallaPrincipalComponent implements OnInit {
 
   getImatge(monstre:any) {
     this.imatge = 'https://www.dnd5eapi.co';
-    this.dragonsApi.getImatges(monstre.url).subscribe(
-      (data:any) => {
-        this.imatge += data.image;
-        console.log(this.imatge)
-      })
+    if(monstre.url != undefined) {
+      this.dragonsApi.getImatges(monstre.url).subscribe(
+        (data:any) => {
+          if(data.image != undefined){
+            this.imatge += data.image;
+          } else {
+            this.imatge = "";
+          }
+        })
+    }
+    
   }
 
   veure(index:number) {
@@ -52,11 +58,19 @@ export class PantallaPrincipalComponent implements OnInit {
         seleccionats.push(i);
       }
     }
+    console.log(seleccionats);
     this.buscarMonstres(seleccionats);
   }
 
   buscarMonstres(seleccionats: Array<number>) {
-    
+    seleccionats.forEach((element) => {
+      this.dragonsApi.getImatges(this.monstres[element].url).subscribe(
+        (data:any) => {
+          
+          console.log(data)
+        }
+      )
+    })
   }
 
 }
