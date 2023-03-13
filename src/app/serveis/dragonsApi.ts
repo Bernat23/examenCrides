@@ -15,6 +15,10 @@ export class DragonsApiService {
         return this.http.get("https://www.dnd5eapi.co/api/monsters",  this.requestOptions);
     }
 
+    getImatges(link:string): Observable<any> {
+        return this.http.get("https://www.dnd5eapi.co" + link,  this.requestOptions);
+    }
+
     private createHeader(){
 
         const header = {
